@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/scss/custom.css">
+</head>
+
+<body>
+    <div class="container bg-success">
+        <header class="d-flex justify-content-between align-items-center">
+            <h1>Bienvenid@ {{user.first_name}}</h1>
+            <a href="/new/grade" class="btn btn-info">Agregar Calificación</a>
+            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+        </header>
+            <h2>Mis Calificaciones</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Alumno</th>
+                            <th>Stack</th>
+                            <th>Fecha</th>
+                            <th>Calificación</th>
+                            <th>Cinturón</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    {% for grade in grades %}
+                        {% if grade.user_id == session['user_id'] %}
+                    <tr>
+                        <td>{{grade.alumno}}</td>
+                        <td>{{grade.stack}}</td>
+                        <td>{{grade.fecha}}</td>
+                        <td>{{grade.calificacion}}</td>
+                        <td>{{grade.cinturon}}</td>
+                        <td>
+                            {% if grade.cinturon != 'Sin Cinturón' %}
+                            <a href="/edit/grade/{{grade.id}}" class="btn btn-warning">Editar</a>
+                            <a href="/delete/grade/{{grade.id}}" class="btn btn-danger">Borrar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+
+                </table>
+                
+        </div>
+    </body>
+                
+</html>
